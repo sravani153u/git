@@ -1,0 +1,19 @@
+alpha = 1/8; 
+mu = 1/8; 
+beta = 4;
+dev = 50; 
+sampleRTT = 200;
+estimatedRTT = 90;
+timeout = 0;
+devdiff = 0;
+final_RTO = [];
+for i=1:50
+    diff = sampleRTT - estimatedRTT;
+    estimatedRTT = estimatedRTT + (alpha * diff);
+    devdiff = abs(diff) - dev;
+    dev = dev + (mu * devdiff);
+    timeout = estimatedRTT + beta * dev;
+    final_RTO = [final_RTO timeout];  
+end
+i = 1:50;
+plot(i,final_RTO);
